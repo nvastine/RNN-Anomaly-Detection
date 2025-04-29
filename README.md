@@ -1,2 +1,10 @@
-# RNN-Anomaly-Detection
-Study using RNN prediction error to identify anomalies in unlabeled, time series data. Explored variations in sequence length, RNN units, adding convolutional layer, feature engineering, and STL decomposition.
+# Evaluating RNN Performance in Unlabeled Time-Series Anomaly Detection
+## Applications in NYC Taxi Volume Analysis
+
+This project explored the use of a recurrent neural network (RNN) to identify anomalies in unlabeled time-series data. The dataset is derived from daily NYC taxi volume data. The data included repeating weekly seasonality, gradual trends, and many visually identifiable anomalies from holidays and other events.
+
+The RNN interprets a preceding sequence of 7 days (1-week of data), then attempts to predict the next point. The resulting prediction error is used to identify anomalous points since anomalies are harder to predict and therefore have a higher prediction error. Anomaly detection using a RNN is challenging due to the bias variance tradeoff and possible overfitting of the model. A base model determined 55 training epochs will used in all subsequent model variations to limit the effects of overfitting. A model specific anomaly threshold was based on the 90th percentile for prediction error, labeling 10% of points as anomalies.
+
+The project explored many model variations to understand their impact on training and anomaly detection. Variations in sequence length revealed negligible gains by increasing the sequence length to 14 days, and some loss by reducing sequence length to 2 days. RNN units could be reduced from 50 to 25 without major losses, but further decreases reduced model performance. A 1-D convolution layer to preprocess the datastream was the second most effective improvement. Feature engineering to create rolling average and rate of change features improved model performance by providing more features, but feature engineering via seasonal-trend decomposition using LOESS (STL) outperformed all other improvements. STL also proved useful as an independent approach to anomaly detection in time series data.
+
+While anomaly detection, like many other machine learning problems, faces the bias-variance tradeoff to model fit, many of the methods explored reveal ways to improve predictive models and reduce training time for very more complex datasets. Future analyis could consider other regularization techniques to further restrict overfitting, evaluate network depth following the RNN, and consider non-neural network approaches to similar anomaly detection applications.
